@@ -1,4 +1,5 @@
-using cars_api.Data;
+using cars_api.Cars.Repository;
+using cars_api.Data.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,8 +26,7 @@ internal class Program
         options.UseMySql(builder.Configuration.GetConnectionString("Default")!,
         new MySqlServerVersion(new Version(8, 0, 21))));
 
-        //builder.Services.AddScoped<ILibraryRepo, LibraryRepo>();
-
+        builder.Services.AddScoped<ICarRepo,CarRepo>();
         builder.Services.AddFluentMigratorCore()
             .ConfigureRunner(rb => rb.AddMySql5()
             .WithGlobalConnectionString(builder.Configuration.GetConnectionString("Default"))
