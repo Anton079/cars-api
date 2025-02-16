@@ -17,20 +17,20 @@ namespace cars_api.Cars.Models
         public string brand { get; set; }
 
         [Required]
-        [Column("model_type")]
-        public string model_type { get; set; }
+        [Column("modelType")]
+        public string modelType { get; set; }
 
         [Required]
-        [Column("horse_power")]
-        public int horse_power {  get; set; }
+        [Column("horsePower")]
+        public int horsePower {  get; set; }
         
         [Required]
         [Column("range")]
         public int range { get; set; }
 
         [Required]
-        [Column("max_speed")]
-        public int max_speed { get; set; }
+        [Column("maxSpeed")]
+        public int maxSpeed { get; set; }
 
     }
 }

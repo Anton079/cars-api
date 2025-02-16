@@ -1,4 +1,5 @@
-﻿using cars_api.Cars.Models;
+﻿using cars_api.Cars.Dtos;
+using cars_api.Cars.Models;
 using cars_api.Cars.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,15 @@ namespace cars_api.Cars.CarController
             var cars = await _carRepo.GetCarsAsync();
 
             return Ok(cars);
+        }
+
+        [HttpPost("add")]
+
+        public async Task<ActionResult<CarResponse>> CreateAsync([FromBody]CarRequest carReq)
+        {
+            CarResponse carSaved = await _carRepo.CreateCarAsync(carReq);
+
+            return Ok(carSaved);
         }
     }
 }

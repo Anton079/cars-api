@@ -17,10 +17,10 @@ namespace cars_api.Data.Migrations
             Create.Table("car")
                 .WithColumn("id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("brand").AsString(120).NotNullable()
-                .WithColumn("model_type").AsString(120).NotNullable()
-                .WithColumn("horse_power").AsInt32().NotNullable()
+                .WithColumn("modelType").AsString(120).NotNullable()
+                .WithColumn("horsePower").AsInt32().NotNullable()
                 .WithColumn("range").AsInt32().NotNullable()
-                .WithColumn("max_speed").AsInt32().NotNullable();
+                .WithColumn("maxSpeed").AsInt32().NotNullable();
         }
     }
 }

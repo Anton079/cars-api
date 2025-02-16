@@ -1,4 +1,5 @@
-﻿using cars_api.Cars.Models;
+﻿using cars_api.Cars.Dtos;
+using cars_api.Cars.Models;
 
 namespace cars_api.Cars.Repository
 {
@@ -6,5 +7,7 @@ namespace cars_api.Cars.Repository
     {
         
         Task<List<Car>> GetCarsAsync();
+
+        Task<CarResponse>CreateCarAsync(CarRequest car);
     }
 }
