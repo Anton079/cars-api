@@ -8,6 +8,10 @@ namespace cars_api.Cars.Repository
         
         Task<List<Car>> GetCarsAsync();
 
-        Task<CarResponse>CreateCarAsync(CarRequest car);
+        Task<CarResponse>CreateCarsAsync(CarRequest car);
+
+        Task<List<Car>> GetCarsByMinSpeed(int maxSpped);
+
+        Task<List<Car>> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed);
     }
 }

@@ -25,11 +25,29 @@ namespace cars_api.Cars.CarController
             return Ok(cars);
         }
 
-        [HttpPost("add")]
+        [HttpGet("GetCarsByMinSpeed/{minSpeed}")]
 
-        public async Task<ActionResult<CarResponse>> CreateAsync([FromBody]CarRequest carReq)
+        public async Task<ActionResult<List<Car>>> GetCarsByMinSpeed([FromRoute] int minSpeed)
         {
-            CarResponse carSaved = await _carRepo.CreateCarAsync(carReq);
+            var cars = await _carRepo.GetCarsByMinSpeed(minSpeed);
+
+            return Ok(cars);
+        }
+
+        [HttpGet("GetCarsByMinMaxSpeed")]
+
+        public async Task<ActionResult<List<Car>>> GetCarsMinMaxSpeed([FromQuery]int minSpeed, int maxSpeed)
+        {
+            var cars = await _carRepo.GetCarByMinMaxSpeed(minSpeed, maxSpeed);
+
+            return Ok(cars);
+        }
+
+        [HttpPost("addCar")]
+
+        public async Task<ActionResult<CarResponse>> CreatesAsync([FromBody]CarRequest carReq)
+        {
+            CarResponse carSaved = await _carRepo.CreateCarsAsync(carReq);
 
             return Ok(carSaved);
         }
