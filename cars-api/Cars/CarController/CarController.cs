@@ -1,6 +1,7 @@
 ﻿using cars_api.Cars.Dtos;
+using cars_api.Cars.Exceptions;
 using cars_api.Cars.Models;
-using cars_api.Cars.Repository;
+using cars_api.Cars.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cars_api.Cars.CarController
@@ -9,47 +10,45 @@ namespace cars_api.Cars.CarController
     [Route("api/v1/[controller]")]
     public class CarController : ControllerBase
     {
-        private ICarRepo _carRepo;
+        private ICarCommandService _carCommandService;
+        private ICarQueryService _carQueryService;
 
-        public CarController(ICarRepo carRepo)
+        public CarController(ICarCommandService carCommandService, ICarQueryService carQueryService)
         {
-            this._carRepo = carRepo;
+            _carCommandService = carCommandService;
+            _carQueryService = carQueryService;
         }
 
         [HttpGet("all")]
-
-        public async Task<ActionResult<List<Car>>> GetCarsAsync()
+        public async Task<ActionResult<List<CarResponse>>> GetCarsAsync()
         {
-            var cars = await _carRepo.GetCarsAsync();
-
-            return Ok(cars);
-        }
-
-        [HttpGet("GetCarsByMinSpeed/{minSpeed}")]
-
-        public async Task<ActionResult<List<Car>>> GetCarsByMinSpeed([FromRoute] int minSpeed)
-        {
-            var cars = await _carRepo.GetCarsByMinSpeed(minSpeed);
-
-            return Ok(cars);
-        }
-
-        [HttpGet("GetCarsByMinMaxSpeed")]
-
-        public async Task<ActionResult<List<Car>>> GetCarsMinMaxSpeed([FromQuery]int minSpeed, int maxSpeed)
-        {
-            var cars = await _carRepo.GetCarByMinMaxSpeed(minSpeed, maxSpeed);
+            var cars = await _carQueryService.GetAllCars();
 
             return Ok(cars);
         }
 
         [HttpPost("addCar")]
-
-        public async Task<ActionResult<CarResponse>> CreatesAsync([FromBody]CarRequest carReq)
+        public async Task<ActionResult<List<CarResponse>>> AddCarAsync([FromBody] AddCarRequest carReq)
         {
-            CarResponse carSaved = await _carRepo.CreateCarsAsync(carReq);
+            var cars = await _carCommandService.AddCar(carReq);
 
-            return Ok(carSaved);
+            return Ok(cars);
+        }
+
+        [HttpDelete("deteleCar")]
+        public async Task<ActionResult<List<CarResponse>>> DeleteCar([FromQuery]int id)
+        {
+            var car = await _carCommandService.DeleteCarById(id);
+
+            return Ok(car);
+        }
+
+        [HttpPut("updateCar")]
+        public async Task<ActionResult<List<CarResponse>>> UpdateCar([FromQuery]int id, [FromBody]EditCarRequest carReq)
+        {
+                var car = await _carCommandService.EditCar(id, carReq);
+
+                return Ok(car);
         }
     }
 }

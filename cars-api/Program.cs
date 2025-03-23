@@ -1,4 +1,5 @@
 using cars_api.Cars.Repository;
+using cars_api.Cars.Service;
 using cars_api.Data.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,14 @@ internal class Program
         new MySqlServerVersion(new Version(8, 0, 21))));
 
         builder.Services.AddScoped<ICarRepo,CarRepo>();
+        builder.Services.AddScoped<ICarCommandService, CarCommandService>();
+        builder.Services.AddScoped<ICarQueryService, CarQueryService>();
+
+
+
+
+
+
         builder.Services.AddFluentMigratorCore()
             .ConfigureRunner(rb => rb.AddMySql5()
             .WithGlobalConnectionString(builder.Configuration.GetConnectionString("Default"))

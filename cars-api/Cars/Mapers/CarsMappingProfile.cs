@@ -9,8 +9,12 @@ namespace cars_api.Cars.Mapers
 
 
         public CarsMappingProfile() {
-            CreateMap<CarRequest, Car>();
+            CreateMap<EditCarRequest, Car>();
+            CreateMap<AddCarRequest, Car>();
             CreateMap<Car, CarResponse>();
         }
+
+        
+
     }
 }
