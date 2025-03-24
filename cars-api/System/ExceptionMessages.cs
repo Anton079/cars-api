@@ -23,5 +23,9 @@
         public static readonly string HorsePowerExistException = "Atributul HorsePower exista deja";
         public static readonly string RangeExistException = "Atributul Range exista deja";
         public static readonly string SpeedExistException = "Atributul Speed exista deja";
+
+        public static readonly string IdToLowException = "Atributul id trebuie sa fie minim 1";
+
+        public static readonly string CarNotFoundException = "Car nu este gasit!";
     }
 }

@@ -27,7 +27,7 @@ namespace cars_api.Cars.Repository
 
         Task<CarResponse> FindCarByIdAsync(int id);
 
-        Task<bool> IsDuplicatedAsync(AddCarRequest carReq);
+        Task<CarResponse> FindCarByBrandAsync(string brand);
 
     }
 }

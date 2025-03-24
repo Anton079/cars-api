@@ -23,9 +23,10 @@ namespace cars_api.Cars.Service
 
         public async Task<CarResponse> AddCar(AddCarRequest carReq)
         {
-            if (carReq == null) { throw new NullCarException(); }
-
-            if (await _carRepo.IsDuplicatedAsync(carReq)) throw new CarExistException();
+            
+            
+            if (await _carRepo.FindCarByBrandAsync(carReq.Brand) != null) 
+                throw new CarExistException();
 
             CarResponse resp =await _carRepo.CreateCarsAsync(carReq);
             
@@ -36,13 +37,27 @@ namespace cars_api.Cars.Service
         {
             var existingCar = await _carRepo.FindCarByIdAsync(id);
 
-            if (existingCar == null) { throw new IdCarNotFound(); }
+          
 
-            if (existingCar.HorsePower == null) { throw new NullHorsePowerException(); }
-            if (existingCar.ModelType == null) { throw new NullModelTypeException(); }
-            if (existingCar.MaxSpeed == null) { throw new NullSpeedException(); }
-            if (existingCar.Brand == null) { throw new NullBrandException(); }
-            if (existingCar.Range == null) { throw new NullRangeException(); }
+            if (existingCar == null)
+            {
+                throw new CarNotFoundException();
+            }
+
+
+            if (carReq.Brand is not null)
+            {
+
+                existingCar = await _carRepo.FindCarByBrandAsync(carReq.Brand);
+
+
+                if (existingCar is not null)
+                {
+                    throw new BrandExistException();
+                }
+            }
+        
+
 
             CarResponse resp = await _carRepo.UpdateCar(id, carReq);
 
@@ -51,15 +66,14 @@ namespace cars_api.Cars.Service
 
         public async Task<CarResponse> DeleteCarById(int id)
         {
-            if(id <= 0) { throw new IdCarNotFound(); }
 
             var car = await _carRepo.FindCarByIdAsync(id);
 
-            if (car == null) { throw new NullCarException(); }
+            if (car == null) { throw new CarNotFoundException(); }
 
             car = await _carRepo.DeleteCarById(id);
 
-            return _mapper.Map<CarResponse>(car);
+            return car;
         }
     }
 }

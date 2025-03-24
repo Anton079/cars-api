@@ -113,10 +113,11 @@ namespace cars_api.Cars.Repository
             return _mapper.Map<CarResponse>(car);
         }
 
-        public async Task<bool> IsDuplicatedAsync(AddCarRequest carReq)
+        public async Task<CarResponse> FindCarByBrandAsync(string brand)
         {
-            return await _appdbContext.Cars.AnyAsync(c => c.modelType == carReq.ModelType &&
-                                                          c.brand == carReq.Brand);
+            var car = await _appdbContext.Cars.FirstOrDefaultAsync(car => car.brand == brand);
+
+            return _mapper.Map<CarResponse>(car);
         }
     }
 }
