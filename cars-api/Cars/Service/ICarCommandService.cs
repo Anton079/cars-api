@@ -11,5 +11,13 @@ namespace cars_api.Cars.Service
 
         Task<CarResponse> DeleteCarById(int id);
 
+        Task<List<CarResponse>> FiltrationByMinHorsePower(int minHp);
+
+        Task<List<CarResponse>> GetCarsByMinSpeed(int minSpeed);
+
+        Task<List<CarResponse>> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed);
+
+        Task<List<CarResponse>> GetCarsByBrand(string brand);
+
     }
 }

@@ -3,6 +3,7 @@ using cars_api.Cars.Dtos;
 using cars_api.Cars.Models;
 using cars_api.Data.Migrations;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 
 namespace cars_api.Cars.Repository
@@ -40,37 +41,9 @@ namespace cars_api.Cars.Repository
             return response;
         }
 
-        public async Task<CarResponse> GetCarsByMinSpeed(int minSpeed)
-        {
-            var cars = await _appdbContext.Cars.Where(car => car.maxSpeed > minSpeed).ToListAsync();
-
-            return _mapper.Map<CarResponse>(cars);
-        }
-
-        public async Task<CarResponse> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed)
-        {
-            var cars = await _appdbContext.Cars.Where(car => car.maxSpeed > minSpeed && car.maxSpeed < maxSpeed).ToListAsync();
-
-            return _mapper.Map<CarResponse>(cars);
-        }
-
         public async Task<CarResponse> DeleteCarByBrand(string brandName)
         {
             var cars = await _appdbContext.Cars.Where(car => car.brand == brandName).ToListAsync();
-
-            return _mapper.Map<CarResponse>(cars);
-        }
-
-        public async Task<CarResponse> GetCarsByMinHP(int minHP)
-        {
-            var cars = await _appdbContext.Cars.Where(car => car.horsePower > minHP).ToListAsync();
-
-            return _mapper.Map<CarResponse>(cars);
-        }
-
-        public async Task<CarResponse> GetAllCarsWitchOutABrand(string brandName)
-        {
-            var cars = await _appdbContext.Cars.Where(car => car.brand != brandName).ToListAsync();
 
             return _mapper.Map<CarResponse>(cars);
         }
@@ -118,6 +91,37 @@ namespace cars_api.Cars.Repository
             var car = await _appdbContext.Cars.FirstOrDefaultAsync(car => car.brand == brand);
 
             return _mapper.Map<CarResponse>(car);
+        }
+
+        //------
+
+        public async Task<List<CarResponse>> GetCarsByMinHP(int minHP)
+        {
+            var cars = await _appdbContext.Cars.Where(car => car.horsePower >= minHP).ToListAsync();
+
+            return _mapper.Map<List<CarResponse>>(cars);
+        }
+
+        public async Task<List<CarResponse>> GetCarsByMinSpeed(int minSpeed)
+        {
+            var cars = await _appdbContext.Cars.Where(car => car.maxSpeed > minSpeed).ToListAsync();
+
+            return _mapper.Map<List<CarResponse>>(cars);
+        }
+
+        public async Task<List<CarResponse>> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed)
+        {
+            var cars = await _appdbContext.Cars.Where(car => car.maxSpeed > minSpeed && car.maxSpeed < maxSpeed).ToListAsync();
+
+            return _mapper.Map<List<CarResponse>>(cars);
+        }
+
+
+        public async Task<List<CarResponse>> GetCarsByBrand(string brand)
+        {
+            var cars = await _appdbContext.Cars.Where(car => car.brand == brand).ToListAsync();
+
+            return _mapper.Map<List<CarResponse>>(cars);
         }
     }
 }

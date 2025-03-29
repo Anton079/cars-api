@@ -11,15 +11,7 @@ namespace cars_api.Cars.Repository
 
         Task<CarResponse>CreateCarsAsync(AddCarRequest car);
 
-        Task<CarResponse> GetCarsByMinSpeed(int maxSpped);
-
-        Task<CarResponse> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed);
-
         Task<CarResponse> DeleteCarByBrand(string brandName);
-
-        Task<CarResponse> GetCarsByMinHP(int minHP);
-
-        Task<CarResponse> GetAllCarsWitchOutABrand(string brandName);
 
         Task<CarResponse> DeleteCarById(int id);
 
@@ -28,6 +20,16 @@ namespace cars_api.Cars.Repository
         Task<CarResponse> FindCarByIdAsync(int id);
 
         Task<CarResponse> FindCarByBrandAsync(string brand);
+        
+        //------
+
+        Task<List<CarResponse>> GetCarsByMinHP(int minHP);
+
+        Task<List<CarResponse>> GetCarsByMinSpeed(int maxSpped);
+
+        Task<List<CarResponse>> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed);
+
+        Task<List<CarResponse>> GetCarsByBrand(string brand);
 
     }
 }

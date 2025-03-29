@@ -75,5 +75,42 @@ namespace cars_api.Cars.Service
 
             return car;
         }
+
+        public async Task<List<CarResponse>> FiltrationByMinHorsePower(int minHp)
+        {
+            var car = await _carRepo.GetCarsByMinHP(minHp);
+
+            if (car == null) { throw new CarNotFoundException(); }
+
+            return _mapper.Map<List<CarResponse>>(car);
+        }
+
+        public async Task<List<CarResponse>> GetCarsByMinSpeed(int minSpeed)
+        {
+            var car = await _carRepo.GetCarsByMinSpeed(minSpeed);
+
+            if (car == null) { throw new CarNotFoundException(); }
+
+            return _mapper.Map<List<CarResponse>>(car);
+        }
+
+        public async Task<List<CarResponse>> GetCarByMinMaxSpeed(int minSpeed, int maxSpeed)
+        {
+            var car = await _carRepo.GetCarByMinMaxSpeed(minSpeed, maxSpeed);
+
+            if (car == null) { throw new CarNotFoundException(); }
+
+            return _mapper.Map<List<CarResponse>>(car);
+        }
+
+        public async Task<List<CarResponse>> GetCarsByBrand(string brand)
+        {
+            var car = await _carRepo.GetCarsByBrand(brand);
+
+            if (car == null) { throw new CarNotFoundException(); }
+
+            return _mapper.Map<List<CarResponse>>(car);
+        }
+
     }
 }
